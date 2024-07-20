@@ -18,8 +18,13 @@
             "id": "token",
             "type": "input",
             "name": "Token API",
-            "description": "Your ClickUp Pk Token API",
-            "default_value": "{{token}}"
+            "description": "Your ClickUp Pk Token API"
+        },
+        {
+            "id": "team_id",
+            "type": "input",
+            "name": "Team ID",
+            "description": "Your ClickUp Team ID"
         }
     ]
 }
