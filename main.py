@@ -11,6 +11,9 @@ from cache import Cache
 
 
 class UClickUpTasksExtension(Extension):
+    """
+    Main Extension class
+    """
 
     def __init__(self):
         super().__init__()
