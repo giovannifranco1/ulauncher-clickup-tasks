@@ -1,5 +1,5 @@
 # UClickUp Tasks Extension
-this extension is a simple extension that allows you to search for tasks in ClickUp and open them in your browser.
+This extension is a simple extension that allows you to search for tasks in ClickUp and open them in your browser.
 
 ![alt text](image.png)
 
@@ -22,7 +22,7 @@ this extension is a simple extension that allows you to search for tasks in Clic
 ## Installation
 1. After you have installed Ulauncher, go to preferences window > extensions > add extension and paste the following url: 
 ```shell
-    https:://
+    https://github.com/giovannifranco1/ulauncher-clickup-tasks
 ```
 2. Enter your ClickUp Token API
 3. Enter your Team ID
