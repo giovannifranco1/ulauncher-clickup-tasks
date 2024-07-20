@@ -1,0 +1,25 @@
+{
+    "required_api_version": "2",
+    "name": "UClickUp Tasks",
+    "description": "Search your tasks in ClickUp",
+    "developer_name": "Giovanni Franco",
+    "icon": "images/icon.png",
+    "options": {
+        "query_debounce": 0.1
+    },
+    "preferences": [
+        {
+            "id": "clickup_tasks_keyword",
+            "type": "keyword",
+            "name": "UClickUp Tasks Keyword",
+            "default_value": "ck"
+        },
+        {
+            "id": "token",
+            "type": "input",
+            "name": "Token API",
+            "description": "Your ClickUp Pk Token API",
+            "default_value": "{{token}}"
+        }
+    ]
+}
