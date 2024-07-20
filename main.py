@@ -4,8 +4,10 @@ from ulauncher.api.shared.event import KeywordQueryEvent, ItemEnterEvent, Prefer
 from ulauncher.api.shared.item.ExtensionResultItem import ExtensionResultItem
 from ulauncher.api.shared.action.RenderResultListAction import RenderResultListAction
 from ulauncher.api.shared.action.HideWindowAction import HideWindowAction
+from ulauncher.api.shared.action.OpenUrlAction import OpenUrlAction
 from core.utils import filter_taks_by_name
-import requests
+from api_clickup import Client
+from cache import Cache
 
 
 class UClickUpTasksExtension(Extension):
@@ -13,7 +15,7 @@ class UClickUpTasksExtension(Extension):
     def __init__(self):
         super().__init__()
         self.subscribe(KeywordQueryEvent, KeywordQueryEventListener())
-        self.token = None
+        self.api_clickup_client = Client()
 
 
 class KeywordQueryEventListener(EventListener):
@@ -46,43 +48,31 @@ class KeywordQueryEventListener(EventListener):
                 ]
             )
 
-        try:
-            response = requests.get(f"https://api.clickup.com/api/v2/team/{team_id}/task", headers={"Authorization": token})
-        except requests.exceptions.RequestException as e:
-            return RenderResultListAction(
-                [
-                    ExtensionResultItem(
-                        icon="images/icon.png",
-                        name="Error fetching tasks",
-                        description=str(e),
-                        on_enter=HideWindowAction(),
-                    )
-                ]
-            )
-
-        tasks = response.json()["tasks"]
+        tasks = extension.api_clickup_client.get_tasks(token, team_id)
         task_name = event.get_argument() or ""
         tasks = filter_taks_by_name(tasks, task_name)
 
         print(task_name)
 
         for task in tasks:
+
+            status = task["status"]["status"] if task["status"] else "No status"
+            project = task["project"]["name"] if task["project"] else "No project"
             items.append(
                 ExtensionResultItem(
                     icon="images/icon.png",
                     name=task["name"],
-                    description=str(task["description"]),
-                    on_enter=HideWindowAction(),
+                    description=str(f"{project} || {status}"),
+                    on_enter=OpenUrlAction(task["url"]),
                 )
             )
 
         return RenderResultListAction(items)
 
 
-# class PreferencesEventListener(EventListener):
-#     def on_event(self, event, extension):
-#         extension.token = event.preferences["token"]  # Set the value of the pk_token preference
-#         return HideWindowAction()
+class PreferencesUpdateEventListener(EventListener):
+    def on_event(self, event, extension):
+        Cache.clean()
 
 
 if __name__ == "__main__":
