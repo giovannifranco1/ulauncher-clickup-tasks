@@ -1,8 +1,6 @@
 # UClickUp Tasks Extension
 This extension is a simple extension that allows you to search for tasks in ClickUp and open them in your browser.
 
-![alt text](image.png)
-
 ## Features
 - Search for tasks in ClickUp
 - Open tasks in your browser
